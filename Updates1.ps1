@@ -23,4 +23,9 @@ $test | select title, status, article, Bulletin, RevisionNumber | where {$_.stat
 
 $test | select title, status, article, Bulletin, RevisionNumber, UpdateClassification | ft -AutoSize
 
-$test | select title, status, article, Bulletin, RevisionNumber | where {$_.status -eq "Installed"} | ft -AutoSize
+$test | select title, status, article, Bulletin, RevisionNumber | where { $_.status -eq "Installed" } | ft -AutoSize
+
+
+# Test
+# Test
+# Test
