@@ -1,7 +1,7 @@
 ﻿[CmdletBinding()]
 Param (
-	[Parameter(Mandatory=$true, HelpMessage="http://yourreportserver/ReportServer/ReportService2005.asmx")]
-	[string]$ReportServerUri,
+	[Parameter(Mandatory=$true)]
+	[string]$ReportServer,
     [string]$BackupDirectory
 )
 
@@ -11,11 +11,12 @@ Param (
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Xml.XmlDocument");
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.IO");
  
-If (!($ReportServerUri))
+If (!($ReportServer))
 {
-    Write-Warning "Report Server URI not found."
+    Write-Warning "Report Server not found."
 }
-# $ReportServerUri = "http://yourreportserver/ReportServer/ReportService2005.asmx";
+# At this point we assume the the URL is valid. A check may be added later.
+$ReportServerUri = "https://$ReportServer/ReportServer/ReportService2005.asmx";
 $Proxy = New-WebServiceProxy -Uri $ReportServerUri -Namespace SSRS.ReportingService2005 -UseDefaultCredential ;
  
 #check out all members of $Proxy
@@ -27,6 +28,7 @@ $items = $Proxy.ListChildren("/", $true) | `
          Select-Object Type, Path, ID, Name | `
          Where-Object {$_.type -eq "Report"};
  
+$Count = ($items.count)         
 #create a new folder where we will save the files
 #PowerShell datetime format codes http://technet.microsoft.com/en-us/library/ee692801.aspx
  
@@ -44,14 +46,19 @@ If ($BackupDirectory)
     }
 
     $fullFolderName = Join-Path $BackupDirectory $folderName
-    $fullFolderName
 
     #$fullFolderName = "C:\Temp\" + $folderName;
 }
 [System.IO.Directory]::CreateDirectory($fullFolderName) | out-null
  
+$i = 0
 foreach($item in $items)
 {
+    [int]$percentComplete = ($i/$Count * 100)
+    Write-Progress -Activity "Processing $($item.path)" -PercentComplete $percentComplete -Status ("Working - " + $percentComplete + "%")
+
+    $i ++
+
     #need to figure out if it has a folder name
     $subfolderName = split-path $item.Path;
     $reportName = split-path $item.Path -Leaf;
