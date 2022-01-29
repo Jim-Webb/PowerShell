@@ -42,18 +42,16 @@ If ($BackupDirectory)
 {
     If (Test-Path $BackupDirectory)
     {
-        Write-Host "Path exists."
+        Write-Host "Path $BackupDirectory exists."
     }
     else {
-        Write-Warning "Path doesn't exist."
-        exit
+        Write-Warning "Path $BackupDirectory doesn't exist. Attempting to create now."
+
+        $fullFolderName = Join-Path $BackupDirectory $folderName
+
+        [System.IO.Directory]::CreateDirectory($fullFolderName) | out-null
     }
-
-    $fullFolderName = Join-Path $BackupDirectory $folderName
-
-    #$fullFolderName = "C:\Temp\" + $folderName;
 }
-[System.IO.Directory]::CreateDirectory($fullFolderName) | out-null
  
 $i = 0
 foreach($item in $items)
