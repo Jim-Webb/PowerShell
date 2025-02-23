@@ -22,10 +22,9 @@ Get-StaleADComputer.ps1 [-SearchBase] <string> [[-SearchScope] <string>] [[-Time
 -SearchBase is the OU to search
 
 -SearchScope - This parameter is used to tell the script what should be returned when searching AD. All is the default if nothing is passed for this parameter.
-
--All - Return all computers, including inactive and computers that have never logged on.
--OnlyInactiveComputers - Only return inactive computers which are computers that have not logged in to AD in the number of days passed by TimeSinceLogin. 
--OnlyNeverLoggedOn - Only return computers that have never logged into AD. This is determined by the LastLogonDate attribute being blank.
+- All - Return all computers, including inactive and computers that have never logged on.
+- OnlyInactiveComputers - Only return inactive computers which are computers that have not logged in to AD in the number of days passed by TimeSinceLogin. 
+- OnlyNeverLoggedOn - Only return computers that have never logged into AD. This is determined by the LastLogonDate attribute being blank.
 
 -TimeSinceLogin is the days the computer hasn't logged into AD.
 
@@ -43,9 +42,9 @@ The files created will also contain the Domain in the name.
 
 Examples:
 
-`ADCleanup-RESEARCH-Controlled Workstations-ByDate180Days.xml`
+`ADCleanup-ViaMonstra-Workstations-ByDate180Days.xml`
  
-`ADCleanup-HOSPITAL-Endpoints-ByDate180Days.csv`
+`ADCleanup-Contoso-Servers-ByDate180Days.csv`
 
 ## Set-StaleADComputerStatus.ps1
 Used to disable the computer accounts found when Get-StaleADComputer.ps1 was ran.
@@ -66,7 +65,7 @@ The script accepts piped input which means you can pipe a list of computers or t
 Below is an example of the Set-StaleADComputerStatus.ps1 command line.
 
 ```powershell
-Import-Clixml .\ADCleanup-Endpoints-ByDate180Days.xml | .\Set-StaleADComputerStatus.ps1 -Change CHG00113106 -Action Disable
+Import-Clixml .\ADCleanup-Endpoints-ByDate180Days.xml | .\Set-StaleADComputerStatus.ps1 -Change CHG00012345 -Action Disable
 ```
 
 ## Remove-StaleADComputer.ps1 
@@ -89,5 +88,5 @@ The script accepts piped input which means you can pipe a list of computers or t
 Below is an example of the Remove-StaleADComputer.ps1 command line.
 
 ```powershell
-Import-Clixml .\ADCleanup-Endpoints-ByDate180Days.xml | .\Remove-StaleADComputer.ps1 -Change CHG00113106 -Action Delete
+Import-Clixml .\ADCleanup-Workstations-ByDate180Days.xml | .\Remove-StaleADComputer.ps1 -Change CHG00012345 -Action Delete
 ```
