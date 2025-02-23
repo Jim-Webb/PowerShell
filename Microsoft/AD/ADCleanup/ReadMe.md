@@ -1,5 +1,9 @@
 # AD Cleanup
-ADStaleComputerScanScheduledTask.ps1
+
+The AD Cleanup solution is a set of PowerShell scripts that ware used to find, disable, and delete stale computer accounts.
+The solution utilizes a scheduled task that scans AD for stale computers, and if found, sends an email with a CSV attached that includes the stale computers.
+
+## ADStaleComputerScanScheduledTask.ps1
 Used to run Get-StaleADComputers.ps1 with the appropriate parameters as part of the scheduled task.
 
 ```powershell
