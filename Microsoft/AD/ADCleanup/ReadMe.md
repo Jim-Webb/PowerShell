@@ -65,7 +65,7 @@ The script accepts piped input which means you can pipe a list of computers or t
 Below is an example of the Set-StaleADComputerStatus.ps1 command line.
 
 ```powershell
-Import-Clixml .\ADCleanup-Endpoints-ByDate180Days.xml | .\Set-StaleADComputerStatus.ps1 -Change CHG00012345 -Action Disable
+Import-Clixml .\ADCleanup-Workstations-ByDate180Days.xml | .\Set-StaleADComputerStatus.ps1 -Change CHG00012345 -Action Disable
 ```
 
 ## Remove-StaleADComputer.ps1 
