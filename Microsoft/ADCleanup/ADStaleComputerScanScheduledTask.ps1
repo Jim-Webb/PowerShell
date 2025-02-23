@@ -1,0 +1,1 @@
+﻿E:\Scripts\ADCleanup\Get-StaleADComputers.ps1 -SearchBase 'OU=Workstations,DC=Corp,DC=ViaMonstra,DC=Com' -TimeSinceLogin 180 -SendEmail
